@@ -1,0 +1,27 @@
+## Compilados de .NET
+bin/
+obj/
+/packages/
+
+## JetBrains Rider / ReSharper
+.idea/
+riderModule.iml
+/_ReSharper.Caches/
+*.user
+
+## Visual Studio
+.vs/
+
+## Configuración con credenciales reales - NO subir al repo
+Lab05-Andrew-Alca/appsettings.json
+Lab05-Andrew-Alca/appsettings.*.json
+!Lab05-Andrew-Alca/appsettings.Example.json
+
+## Excluidos a pedido: scripts de BD y documentación interna del laboratorio
+db.sql
+insert.sql
+Lab05-Andrew-Alca/prompt-laboratorio-unitofwork.md
+Lab05-Andrew-Alca/pruebas-swagger-auth.md
+
+## Otros
+.atl/
