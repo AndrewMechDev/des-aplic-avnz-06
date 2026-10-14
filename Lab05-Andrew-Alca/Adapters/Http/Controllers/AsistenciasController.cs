@@ -1,19 +1,19 @@
-using Lab05_Andrew_Alca.Extensions;
+using Lab05_Andrew_Alca.Adapters.Http.Extensions;
 using Lab05_Andrew_Alca.Models;
 using Lab05_Andrew_Alca.Services;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
-namespace Lab05_Andrew_Alca.Controllers;
+namespace Lab05_Andrew_Alca.Adapters.Http.Controllers;
 
 [Authorize]
 [ApiController]
 [Route("api/[controller]")]
-public class MatriculasController : ControllerBase
+public class AsistenciasController : ControllerBase
 {
-    private readonly IMatriculasService _service;
+    private readonly IAsistenciasService _service;
 
-    public MatriculasController(IMatriculasService service)
+    public AsistenciasController(IAsistenciasService service)
     {
         _service = service;
     }
@@ -33,18 +33,14 @@ public class MatriculasController : ControllerBase
     }
 
     [HttpPost]
-    public async Task<IActionResult> Post(Matriculas entity)
+    public async Task<IActionResult> Post(Asistencias entity)
     {
-        var (success, error, creado) = await _service.CreateAsync(entity);
-        if (!success)
-        {
-            return BadRequest(new { message = error });
-        }
-        return CreatedAtAction(nameof(Get), new { id = creado!.IdMatricula }, creado);
+        var creado = await _service.CreateAsync(entity);
+        return CreatedAtAction(nameof(Get), new { id = creado.IdAsistencia }, creado);
     }
 
     [HttpPut("{id}")]
-    public async Task<IActionResult> Put(int id, Matriculas entity)
+    public async Task<IActionResult> Put(int id, Asistencias entity)
     {
         var updated = await _service.UpdateAsync(id, entity);
         return updated.ToUpdateResult();

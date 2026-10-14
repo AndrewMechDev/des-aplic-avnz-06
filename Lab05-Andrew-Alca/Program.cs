@@ -1,11 +1,11 @@
 using System.Text;
+using Lab05_Andrew_Alca.Adapters.Http.Middleware;
 using Lab05_Andrew_Alca.Data;
 using Lab05_Andrew_Alca.Repositories;
 using Lab05_Andrew_Alca.Repositories.Implements;
 using Lab05_Andrew_Alca.Services;
 using Lab05_Andrew_Alca.Services.Implements;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
-using Microsoft.AspNetCore.Diagnostics;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.Tokens;
 using Microsoft.OpenApi;
@@ -66,21 +66,7 @@ builder.Services.AddAuthorization(options =>
 
 var app = builder.Build();
 
-app.UseExceptionHandler(errorApp =>
-{
-    errorApp.Run(async context =>
-    {
-        var exception = context.Features.Get<IExceptionHandlerFeature>()?.Error;
-        context.Response.StatusCode = exception switch
-        {
-            UnauthorizedAccessException => StatusCodes.Status401Unauthorized,
-            InvalidOperationException => StatusCodes.Status400BadRequest,
-            _ => StatusCodes.Status500InternalServerError
-        };
-        context.Response.ContentType = "application/json";
-        await context.Response.WriteAsJsonAsync(new { message = exception?.Message });
-    });
-});
+app.UseExceptionHandler(errorApp => errorApp.Run(ApiExceptionHandler.HandleAsync));
 
 if (app.Environment.IsDevelopment())
 {

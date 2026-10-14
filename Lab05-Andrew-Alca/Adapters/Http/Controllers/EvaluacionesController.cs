@@ -1,19 +1,19 @@
-using Lab05_Andrew_Alca.Extensions;
+using Lab05_Andrew_Alca.Adapters.Http.Extensions;
 using Lab05_Andrew_Alca.Models;
 using Lab05_Andrew_Alca.Services;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
-namespace Lab05_Andrew_Alca.Controllers;
+namespace Lab05_Andrew_Alca.Adapters.Http.Controllers;
 
 [Authorize]
 [ApiController]
 [Route("api/[controller]")]
-public class CursosController : ControllerBase
+public class EvaluacionesController : ControllerBase
 {
-    private readonly ICursosService _service;
+    private readonly IEvaluacionesService _service;
 
-    public CursosController(ICursosService service)
+    public EvaluacionesController(IEvaluacionesService service)
     {
         _service = service;
     }
@@ -33,14 +33,14 @@ public class CursosController : ControllerBase
     }
 
     [HttpPost]
-    public async Task<IActionResult> Post(Cursos entity)
+    public async Task<IActionResult> Post(Evaluaciones entity)
     {
         var creado = await _service.CreateAsync(entity);
-        return CreatedAtAction(nameof(Get), new { id = creado.IdCurso }, creado);
+        return CreatedAtAction(nameof(Get), new { id = creado.IdEvaluacion }, creado);
     }
 
     [HttpPut("{id}")]
-    public async Task<IActionResult> Put(int id, Cursos entity)
+    public async Task<IActionResult> Put(int id, Evaluaciones entity)
     {
         var updated = await _service.UpdateAsync(id, entity);
         return updated.ToUpdateResult();

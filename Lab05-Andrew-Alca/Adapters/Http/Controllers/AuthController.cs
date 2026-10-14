@@ -1,10 +1,9 @@
 using Lab05_Andrew_Alca.DTOs;
-using Lab05_Andrew_Alca.Extensions;
 using Lab05_Andrew_Alca.Services;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
-namespace Lab05_Andrew_Alca.Controllers;
+namespace Lab05_Andrew_Alca.Adapters.Http.Controllers;
 
 [ApiController]
 [Route("api/[controller]")]
